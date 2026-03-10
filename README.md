@@ -16,15 +16,19 @@ The bot periodically checks specific RSS feeds for articles containing Mancheste
 - `bot.py`: The main entry point. Initializes the Telegram bot, sets up the job scheduler, and defines the message sending logic.
 - `news_fetcher.py`: Contains the logic to parse RSS feeds, extract data, and filter articles based on keywords and database records.
 - `database.py`: Handles the SQLite database operations (`sent_articles.db`) for keeping track of sent news URLs.
-- `config.example.py`: Stores configuration variables such as the Telegram token, channel ID, check intervals, and feed URLs.
+- `config.py`: Loads configuration from environment variables using `python-dotenv`.
+- `.env`: Stores environment variables such as your Telegram token, channel ID, and API keys.
 
 ## Prerequisites
 
-To run this project, you will need Python installed on your system along with the following primary libraries:
+To run this project, you will need Python installed on your system. The required libraries can be installed via `requirements.txt` and include:
 
 - `python-telegram-bot`
 - `apscheduler`
 - `feedparser`
+- `python-dotenv`
+- `requests`
+- `httpx`
 
 ## Setup and Installation
 
@@ -37,12 +41,16 @@ To run this project, you will need Python installed on your system along with th
    ```
 3. Install the required dependency packages using pip:
    ```bash
-   pip install python-telegram-bot apscheduler feedparser
+   pip install -r requirements.txt
    ```
-4. Rename `config.example.py` to `config.py` and Update `config.py` with your specific credentials:
-   - `TELEGRAM_TOKEN`: Your Telegram Bot token obtained from BotFather.
-   - `CHANNEL_ID`: The target channel ID or username (e.g., `@manchesternews04`).
-   - Custom configurations like `RSS_FEEDS` or `CHECK_INTERVAL_MINUTES`.
+4. Create a `.env` file in the root directory and add your specific credentials:
+   ```env
+   TELEGRAM_TOKEN=your_telegram_bot_token
+   CHANNEL_ID=@your_target_channel_id
+   FOOTBALL_API_KEY=your_api_key
+   MAN_UTD_TEAM_ID=66
+   CHECK_INTERVAL_MINUTES=30
+   ```
 5. Run the bot:
    ```bash
    python bot.py
